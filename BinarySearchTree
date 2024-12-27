@@ -1,0 +1,98 @@
+class BinarySearchTree:
+    def __init__(self,data):
+        self.data = data
+        self.left = None 
+        self.right = None
+    
+    def add_child(self,data):
+        if(data<self.data):
+            if(self.left):
+                self.left.add_child(data)
+            else:
+                self.left = BinarySearchTree(data)
+        
+        elif(data==self.data):
+            pass
+        
+        else:
+            if(self.right):
+                self.right.add_child(data)
+            else:
+                self.right = BinarySearchTree(data)
+                
+    def inorder_traversal(self):
+        elements = []
+        if(self.left):
+            elements += self.left.inorder_traversal()
+        elements.append(self.data)
+        if(self.right):
+            elements += self.right.inorder_traversal()
+        return elements
+    
+    def binary_serach(self,data):
+        if(data<self.data):
+            if(self.left):
+                return self.left.binary_serach(data)
+        elif(data==self.data):
+            return True
+        else:
+            if(self.right):
+                return self.right.binary_serach(data)
+        return False
+    
+    def build_tree(self,elements):
+        for e in elements:
+            self.add_child(e)
+        return self
+    
+    def find_min(self):
+        if(self.left):
+            return self.left.find_min()
+        return self.data
+    
+    def find_max(self):
+        if(self.right):
+            return self.right.find_max()
+        return self.data
+    
+    def calc_sum(self):
+        sums = 0
+        if(self.left):
+            sums += self.left.calc_sum()
+        sums += self.data
+        if(self.right):
+            sums += self.right.calc_sum()
+        return sums
+        
+    def post_order_traversal(self):
+        elements = []
+        if(self.left):
+            elements += self.left.post_order_traversal()
+        if(self.right):
+            elements += self.right.post_order_traversal()
+        elements.append(self.data)
+        return elements
+    
+    def pre_order_traversal(self):
+        elements = []
+        elements.append(self.data)
+        if(self.left):
+            elements += self.left.pre_order_traversal()
+        if(self.right):
+            elements += self.right.pre_order_traversal()
+        return elements
+        
+        
+if __name__ == "__main__":
+    elements = [8,4,11,3,7,10,13,11,10,12,5,6,1,2,15,14,9]
+    root = BinarySearchTree(elements[0])
+    root.build_tree(elements)
+    print(root)
+    inorder_ele = root.inorder_traversal()
+    print(inorder_ele)
+    print(root.post_order_traversal())
+    print(root.pre_order_traversal())
+    print(root.binary_serach(15))
+    print(root.find_min())
+    print(root.find_max())
+    print(root.calc_sum())
